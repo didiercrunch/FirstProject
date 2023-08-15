@@ -1,26 +1,28 @@
 ﻿// See https://aka.ms/new-console-template for more information
 namespace Algorithms;
 using System;
+using Algorithms.NumberTheory;
 
-class Point{
-    
-    private double x;
-    private double y;
-    
-    public Point(double x, double y){
-        this.x = x;
-        this.y = y;
+class Program
+{
+
+    public static void printEachDirectoryOnPath(string path)
+    {
+        string[] subs = path.Split(':');
+
+        foreach (var sub in subs)
+        {
+            Console.WriteLine(sub);
+        }
     }
-    
-    public double Distance(){
-        return Math.Sqrt(x * x + x * y);
-    }
-}
 
 
-class Foo{
-    public static void Main(String[] args){
-        Point p = new Point(3, 4);
-        Console.WriteLine("Hello World From A Class: " + p.Distance());
+    public static void Main(String[] args)
+    {
+        Point point = new Point(0, 0);
+        Point point2 = new Point(10, 10);
+        Console.WriteLine("La valeure de X de point est: " + point.X());
+        Console.WriteLine("La valeure de X de point2 est: " + point2.X());
+
     }
 }
