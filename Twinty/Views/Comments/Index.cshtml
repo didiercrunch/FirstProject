@@ -1,0 +1,33 @@
+
+<div id="new-comment"></div>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">boris</h5>
+    <p class="card-text">Ceci est la chose la plus plate de tous les temps!</p>
+  </div>
+</div>
+
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">didier</h5>
+    <p class="card-text">Ce site est incroyable, svp dites moi s'en plus!</p>
+  </div>
+</div>
+
+
+<form hx-post="/comments/create-comment"
+      hx-ext="json-enc"
+      hx-trigger="submit"
+      hx-target="#new-comment"
+      hx-swap="afterbegin">
+
+    <labe  class="form-label">Nom 
+        <input type=text name="name" class="form-control" placeholder="Bob Le Chef"></label><br>
+    <label  class="form-label">Commentaire 
+        <textarea type=text name="comment"  class="form-control" placeholder="blah blah blah" ></textarea>
+    </label>
+    <br>
+    <input type=submit  class="btn btn-primary">
+</form>

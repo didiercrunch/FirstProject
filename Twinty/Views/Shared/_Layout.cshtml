@@ -4,6 +4,60 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Twinty</title>
+    <script src="https://unpkg.com/htmx.org@1.9.5"
+        integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" 
+        crossorigin="anonymous"></script>
+
+    <script>
+(function () {
+  function _isNumeric(str) {
+    if (typeof str != "string") {
+      return false
+    }
+    return !isNaN(str) && !isNaN(parseFloat(str));
+  }
+
+  function _cast(str) {
+    return _isNumeric(str) ? parseFloat(str) : str;
+  }
+
+  function _addAssocToDict(obj, key, value) {
+    let splittedKey = Array.isArray(key) ? key : key.split(".");
+    const keyToAdd = splittedKey.shift();
+    const isTerminal = splittedKey.length === 0;
+    if (isTerminal) {
+      obj[keyToAdd] = _cast(value);
+      return obj;
+    }
+    if (!(keyToAdd in obj)) {
+      obj[keyToAdd] = {};
+    }
+    return _addAssocToDict(obj[keyToAdd], splittedKey, value);
+  }
+
+  function _createPayload(params) {
+    let ret = {};
+    for (let key of Object.keys(params)) {
+      _addAssocToDict(ret, key, params[key]);
+    }
+    return ret;
+  }
+
+  htmx.defineExtension('json-enc', {
+    onEvent: function (name, evt) {
+      if (name === "htmx:configRequest") {
+        evt.detail.headers['Content-Type'] = "application/json";
+      }
+    },
+
+    encodeParameters: function (xhr, parameters, elt) {
+      xhr.overrideMimeType('text/json');
+      return (JSON.stringify(_createPayload(parameters)));
+    }
+  });
+})();
+
+    </script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Twinty.styles.css" asp-append-version="true" />
