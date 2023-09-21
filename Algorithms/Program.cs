@@ -10,8 +10,28 @@ class EntryPoint
 
     public static void Main(String[] args)
     {
-        SierpinskiTriangle st = new SierpinskiTriangle(new Random(666));
-        string vegaLite = st.GenerateVegaLiteSpec(new Point(2, 3), 2000);
-        Console.WriteLine(vegaLite);
+        int[] scores = { 97, 92, 81, 60 };
+
+        // Define the query expression.
+        IEnumerable<int> scoreQuery =
+            from score in scores
+            where score > 80
+            select score;
+
+        // Execute the query.
+        foreach (int i in scoreQuery)
+        {
+            if(i == 92){
+                break;
+            }
+            Console.Write(i + " ");
+        }
+
+        Console.WriteLine("-- >>> ");
+
+        foreach (int i in scoreQuery)
+        {
+            Console.Write(i + " ");
+        }
     }
 }
